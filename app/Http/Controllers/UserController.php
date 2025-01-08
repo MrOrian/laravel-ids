@@ -4,28 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
     // Hiển thị danh sách user
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(3);
         return view('users.index', compact('users'));
     }
 
     // Thêm user mới
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('password'), // Mật khẩu mặc định
+            'password' => bcrypt($request->password), // Mã hóa mật khẩu nhập vào
         ]);
-
-        return redirect()->route('users.index');
+    
+        return redirect()->route('users.index')->with('success', 'User created successfully!');
     }
-
+    
     public function edit($id)
     {
         $user = User::findOrFail($id);  // Lấy người dùng theo ID
@@ -33,15 +34,9 @@ class UserController extends Controller
     }
 
     // Cập nhật thông tin người dùng
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user = User::findOrFail($id);  // Lấy người dùng theo ID
-
-        // Validate dữ liệu
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-        ]);
 
         // Cập nhật thông tin người dùng
         $user->update([
