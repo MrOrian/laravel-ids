@@ -327,6 +327,11 @@ return [
             'label' => 4,
             'label_color' => 'success',
         ],
+        [
+            'text' => 'Manager User',
+            'url' => 'users',
+            'icon' => 'fas fa-fw fa-user',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
