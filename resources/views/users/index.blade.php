@@ -202,11 +202,12 @@
         });
     });
 
+//------------------------------------------------------------------//
 
     //AJAX ADD
     $(document).ready(function () {
         $('#addUserForm').off('submit').on('submit', function (e) {
-            e.preventDefault(); // Ngăn form submit toàn trang
+            e.preventDefault();
 
             $.ajax({
                 url: $(this).attr('action'),
@@ -216,10 +217,8 @@
                     if (response.success) {
                         alert(response.message);
 
-                        // Đóng modal sau khi thêm thành công
                         $('#addUserModal').modal('hide');
 
-                        // Cập nhật UI mà không cần reload trang
                         let newUserRow = `
                             <tr>
                                 <td>${response.user.id}</td>
@@ -240,7 +239,6 @@
                             </tr>
                         `;
 
-                        // Thêm dòng người dùng mới vào bảng
                         $('table tbody').append(newUserRow);
                     } else {
                         alert('Error: ' + response.message);
@@ -261,25 +259,10 @@
             });
         });
     });
+//------------------------------------------------------------------//
 
-    //Đổ dữ liệu vào input khi edit
-    $('#editUserModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var userId = button.data('id');
-        var userName = button.data('name');
-        var userEmail = button.data('email');
-
-        var modal = $(this);
-        modal.find('#edit_name').val(userName);
-        modal.find('#edit_email').val(userEmail);
-
-        var formAction = '{{ route('users.update', ':id') }}';
-        formAction = formAction.replace(':id', userId);
-        modal.find('form').attr('action', formAction);
-    });
-
+    //AJAX EDIT
     $(document).ready(function () {
-    // Xử lý sự kiện mở modal Edit User
     $('#editUserModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var userId = button.data('id');
@@ -295,7 +278,6 @@
         modal.find('form').attr('action', formAction);
     });
 
-    // Xử lý form Edit User với AJAX
     $('#editUserForm').on('submit', function (e) {
         e.preventDefault();
 
@@ -310,7 +292,6 @@
                     alert(response.message);
                     $('#editUserModal').modal('hide');
 
-                    // Tạo dòng user mới
                     let updatedRow = `
                         <tr>
                             <td>${response.user.id}</td>
@@ -328,7 +309,6 @@
                         </tr>
                     `;
 
-                    // Cập nhật UI
                     let row = $('table tbody').find(`button[data-id="${response.user.id}"]`).closest('tr');
                     if (row.length) {
                         row.replaceWith(updatedRow);
@@ -352,8 +332,7 @@
             }
         });
     });
-
-
+//------------------------------------------------------------------//
     //AJAX DELETE
     $(document).on('click', '.delete-user', function (e) {
         e.preventDefault();
