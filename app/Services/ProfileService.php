@@ -20,14 +20,15 @@ class ProfileService {
     public function updateProfile(array $data) {
         $user = Auth::user();
 
-        if (isset($data['current_password']) && !empty($data['current_password'])) {
-            if (!Hash::check($data['current_password'], $user->password)) {
-                return back()->withErrors(['current_password' => 'Mật khẩu cũ không đúng.']);
-            }
+        // if (isset($data['current_password']) && !empty($data['current_password'])) {
+        //     if (!Hash::check($data['current_password'], $user->password)) {
+        //         return back()->withErrors(['current_password' => 'Mật khẩu cũ không đúng.']);
+        //     }
 
-            $data['password'] = Hash::make($data['new_password']);
-        }
-
+        //     $data['password'] = Hash::make($data['new_password']);
+        // } 
+        // Chưa cần dùng
+        
         if (isset($data['avatar']) && $data['avatar']->isValid()) {
             $avatarPath = $data['avatar']->store('avatars', 'public');
             $data['avatar'] = $avatarPath;
