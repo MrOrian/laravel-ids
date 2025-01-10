@@ -21,7 +21,7 @@ class ProfileController extends Controller{
     {
         $data = $request->validated();
         $profile = $this->profileService->updateProfile($data);
-        return redirect()->route('profile.index')->with('success', 'Profile updated successfully!');
+        return redirect()->route('profile.index')->with('success', trans('msg.updated'));
 
     }
 
