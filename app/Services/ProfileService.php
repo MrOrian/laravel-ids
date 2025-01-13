@@ -33,6 +33,9 @@ class ProfileService {
             $avatarPath = $data['avatar']->store('avatars', 'public');
             $data['avatar'] = $avatarPath;
         }
+        else {
+            $avatar = 'default-avatar.jpg'; 
+        }
 
         return $this->profileRepository->updateProfile($user->id, $data);
     }
