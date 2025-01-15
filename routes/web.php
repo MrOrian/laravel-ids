@@ -12,5 +12,5 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::middleware(['auth'])->get('/users/search', [UserController::class, 'searchByName'])->name('users.searchByName');
-Route::middleware(['auth'])->resource('users', UserController::class);
+Route::middleware(['auth', 'isAdmin'])->resource('users', UserController::class);
 Route::middleware(['auth'])->resource('profile', ProfileController::class);

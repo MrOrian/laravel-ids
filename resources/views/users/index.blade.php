@@ -254,6 +254,7 @@
                         alert(errorMessage);
                     } else {
                         alert('Something went wrong!');
+                        console.log(response);
                     }
                 }
             });

@@ -12,6 +12,6 @@ class ValidEmailExtension implements Rule
     
     public function message()
     {
-        return 'Email phải có phần mở rộng hợp lệ như .com, .net, .org, .edu.';
+        return trans('msg.emailNotTrue');
     }
 }

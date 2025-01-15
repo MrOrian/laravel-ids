@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
 use App\Common\Constant;
-
+use App\Models\Role;
 class UserRepository implements UserRepositoryInterface
 {
     public function find($id)
@@ -16,7 +16,9 @@ class UserRepository implements UserRepositoryInterface
     public function create(array $data)
     {
         $data['password'] = bcrypt($data['password']);
-        return User::create($data);
+        $user = User::create($data);
+       
+        return $user;
     }
 
     public function update($id, array $data)

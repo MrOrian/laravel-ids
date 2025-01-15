@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->nullable()->default('default_avatar.jpg');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -33,5 +34,8 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['role_id']);
+        });
     }
 };

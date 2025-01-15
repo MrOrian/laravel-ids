@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Services\UserService;
+use App\Exceptions\CustomException;
+
+use Illuminate\Support\Facades\Log;
+
 class UserController extends Controller
 {
     protected $userService;
@@ -37,10 +41,11 @@ class UserController extends Controller
         $user = $this->userService->update($id, $data);
 
         if (!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => trans('msg.update_failed'),
-            ], 400);
+            // return response()->json([
+            //     'success' => false,
+            //     'message' => trans('msg.update_failed'),
+            // ], 400);
+            throw new CustomException(trans('msg.update_failed'), ErrorCode::FAILED, StatusCode::BAD_REQUEST);
         }
 
         return response()->json([
@@ -50,13 +55,13 @@ class UserController extends Controller
         ]);
     }
 
-
     public function destroy($id)
     {
         $this->userService->delete($id);
         return response()->json([
             'success' => trans('msg.deleted')
-        ]);    }
+        ]);    
+    }
 
     public function searchByName(Request $request)
     {  

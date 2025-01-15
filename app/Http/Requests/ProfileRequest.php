@@ -19,6 +19,6 @@ class ProfileRequest extends FormRequest {
     }
 
     public function message(){
-        return trans('messages.checkUserRequest');
+        return trans('msg.checkUserRequest');
     }
 }
