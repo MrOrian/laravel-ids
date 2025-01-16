@@ -1,9 +1,12 @@
 <?php
 
 return [
+    'successful' => 'Successful',
+    'user_not_found' => 'User not found',
     'validation_failed' => 'Validation Failed!',
     'created' => 'User Created Successfully!',
     'create_failed' => 'User Create Fail!',
+    'user_existed' => 'User has been created',
     'updated' => 'User Updated Successfully!',
     'update_failed' => 'User Updated Successfully!',
     'deleted' => 'User Deleted Successfully!',

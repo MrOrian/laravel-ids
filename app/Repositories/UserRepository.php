@@ -39,4 +39,8 @@ class UserRepository implements UserRepositoryInterface
         return User::where('name', 'like', '%' . $name . '%');
     }
 
+    public function findEmail($email){
+        return User::where('email', '=', $email)->first();
+    }
+
 }

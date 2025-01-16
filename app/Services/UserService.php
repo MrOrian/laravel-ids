@@ -6,6 +6,7 @@ use App\Repositories\UserRepositoryInterface;
 use App\Common\Constant;
 use App\Models\User;
 use App\Exceptions\CustomException;
+
 class UserService
 {
     protected $userRepository;
@@ -15,14 +16,37 @@ class UserService
         $this->userRepository = $userRepository;
     }
 
+    public function getHome(){
+        return $url = '/home';
+    }
+
+    public function getAllUsersAPI(){
+        return User::All();
+    }
+
+    public function createUserAPI($data){
+        if(!isset($data['role_id'])){
+            $data['role_id'] = 2;
+        }
+        return $this->userRepository->create($data);
+    }
+
+    public function updateUserAPI($id, $data){
+        return $this->userRepository->update($id, $data);
+    }
+
+    public function deleteUserAPI($id){
+        return $this->userRepository->delete($id);
+    }
+
     public function getAllUsers()
     {
-        return User::paginate(Constant::PAGINATE_DEFAULT);;
+        return User::paginate(Constant::PAGINATE_DEFAULT);
     }
 
     public function getUserById($id)
     {
-        return $this->userRepository->find($id);
+        return User::find($id);
     }
 
     public function create(array $data)
@@ -48,5 +72,9 @@ class UserService
     public function searchByName($name){
         Log::info($name);
         return $this->userRepository->searchByName($name)->paginate(Constant::PAGINATE_DEFAULT);
+    }
+
+    public function findEmail($email){
+        return $this->userRepository->findEmail($email);
     }
 }
