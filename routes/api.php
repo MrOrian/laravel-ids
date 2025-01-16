@@ -3,7 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\API\UserControllerAPI;
+use Tymon\JWTAuth\Facades\JWTAuth;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,9 +18,15 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::prefix('')->group(function(){
+    Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('users', [UserController::class, 'store']);
+    Route::middleware(['auth:api', 'isAdmin'])->group(function() {
+        Route::get('/user', [UserControllerAPI::class, 'index']);
+        Route::get('/user/all', [UserControllerAPI::class, 'getAll']);
+        Route::post('/user', [UserControllerAPI::class, 'createUser']);
+        Route::put('/user/{id}', [UserControllerAPI::class, 'updateUser']);
+        Route::delete('/user/{id}', [UserControllerAPI::class, 'deleteUser']);
+    });
+});
 
