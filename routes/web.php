@@ -21,7 +21,7 @@ Route::middleware(['auth'])->resource('profile', ProfileController::class);
 Route::prefix('api')->group(function(){
     Route::post('/login', [AuthController::class, 'login']);
 
-    Route::middleware('auth:api')->group(function() {
+    Route::middleware(['auth:api', 'isAdmin'])->group(function() {
         Route::get('/user', [UserControllerAPI::class, 'index']);
         Route::get('/user/all', [UserControllerAPI::class, 'getAll']);
         Route::post('/user', [UserControllerAPI::class, 'createUser']);

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-
+use Symfony\Component\HttpFoundation\Response;
 class IsAdmin
 {
     /**
@@ -17,7 +17,7 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         if(auth()->check() && auth()->user()->role_id !== 1) {
-            return redirect()->route('profile.index')->with('error', trans('msg.notAllow'));
+            return response()->json(trans('msg.notAllow'));
         }
         return $next($request);
     }
